@@ -3098,13 +3098,13 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Behaviors.DragnDrop.Acts.SetEnabled,
 		C3.Plugins.Text.Acts.MoveToBottom,
+		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.Audio.Cnds.OnEnded,
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
 		C3.Plugins.Mouse.Cnds.OnObjectClicked,
 		C3.Plugins.Touch.Cnds.OnTouchObject,
-		C3.Plugins.Sprite.Acts.SetVisible,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
@@ -3432,7 +3432,8 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => (v0.GetValue() + "| Banana |");
-		}
+		},
+		() => 30
 	];
 }
 
