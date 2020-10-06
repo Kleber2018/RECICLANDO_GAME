@@ -2916,6 +2916,27 @@ map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}}};
 'use strict';{const C3=self.C3;C3.Plugins.iframe.Exps={}};
 
 
+'use strict';{const C3=self.C3;const DOM_COMPONENT_ID="file-chooser";C3.Plugins.filechooser=class FileChooserPlugin extends C3.SDKDOMPluginBase{constructor(opts){super(opts,DOM_COMPONENT_ID);this.AddElementMessageHandler("change",(sdkInst,e)=>sdkInst._OnChange(e))}Release(){super.Release()}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.filechooser.Type=class FileChooserType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}};
+
+
+'use strict';{const C3=self.C3;const ACCEPT=0;const SELECT=1;const INITIALLY_VISIBLE=2;const ID=3;const SINGLE=0;const MULTIPLE=1;const DOM_COMPONENT_ID="file-chooser";C3.Plugins.filechooser.Instance=class FileChooserInstance extends C3.SDKDOMInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._accept="";this._isMultiSelect=false;this._id="";this._files=[];if(properties){this._accept=properties[ACCEPT];this._isMultiSelect=properties[SELECT]!==SINGLE;this.GetWorldInfo().SetVisible(properties[INITIALLY_VISIBLE]);
+this._id=properties[ID]}this.CreateElement({"id":this._id})}Release(){super.Release()}GetElementState(){return{"accept":this._accept,"isMultiSelect":this._isMultiSelect}}_GetFileAt(index){index=Math.floor(index);if(index<0||index>=this._files.length)return null;return this._files[index]}async _OnChange(e){this._files=e["files"];await this.TriggerAsync(C3.Plugins.filechooser.Cnds.OnChanged)}Draw(renderer){}GetPropertyValueByIndex(index){switch(index){case ACCEPT:return this._accept;case SELECT:return this._isMultiSelect?
+MULTIPLE:SINGLE;case ID:return this._id}}SetPropertyValueByIndex(index,value){switch(index,value){case ACCEPT:if(this._accept===value)return;this._accept=value;this.UpdateElementState();break;case SELECT:if(this._isMultiSelect===(value!==SINGLE))return;this._isMultiSelect=value!==SINGLE;this.UpdateElementState();break;case ID:if(this._id===value)return;this._id=value;this.UpdateElementState();break}}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.filechooser.Cnds={OnChanged(){return true}}};
+
+
+'use strict';{const C3=self.C3;C3.Plugins.filechooser.Acts={ReleaseFile(f){URL.revokeObjectURL(f)},Click(){this._PostToDOMElementMaybeSync("click")}}};
+
+
+'use strict';{const C3=self.C3;const urlCache=new WeakMap;C3.Plugins.filechooser.Exps={FileCount(){return this._files.length},FileNameAt(i){const file=this._GetFileAt(i);return file?file["name"]||"":""},FileSizeAt(i){const file=this._GetFileAt(i);return file?file["size"]||0:0},FileTypeAt(i){const file=this._GetFileAt(i);return file?file["type"]||"":""},FileURLAt(i){const file=this._GetFileAt(i);if(!file)return"";let url=urlCache.get(file);if(url)return url;url=URL.createObjectURL(file);urlCache.set(file,
+url);return url}}};
+
+
 'use strict';{const C3=self.C3;C3.Behaviors.Bullet=class BulletBehavior extends C3.SDKBehaviorBase{constructor(opts){super(opts)}Release(){super.Release()}}};
 
 
@@ -3052,6 +3073,7 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		C3.Behaviors.bound,
 		C3.Plugins.Spritefont2,
 		C3.Plugins.iframe,
+		C3.Plugins.filechooser,
 		C3.Behaviors.DragnDrop,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Audio.Acts.Play,
@@ -3104,6 +3126,7 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		C3.Plugins.Mouse.Cnds.IsOverObject,
 		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
+		C3.Plugins.System.Acts.ResetGlobals,
 		C3.Plugins.Mouse.Cnds.OnObjectClicked,
 		C3.Plugins.Touch.Cnds.OnTouchObject,
 		C3.Plugins.System.Acts.Wait,
@@ -3146,6 +3169,7 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		{bt_menu: 0},
 		{bt_continuar: 0},
 		{Itens: 0},
+		{bt_novamente: 0},
 		{FundoEmBlocos: 0},
 		{Mouse_menu: 0},
 		{Teclado_menu: 0},
@@ -3173,6 +3197,7 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 		{Sprite4: 0},
 		{Sprite5: 0},
 		{Sprite6: 0},
+		{SelecionadorDeArquivo: 0},
 		{ArrastarSoltar: 0},
 		{MoverPara2: 0},
 		{lixoReciclavel: 0},
@@ -3412,6 +3437,7 @@ newY);wi.SetBboxChanged()}}else if(this._axes===1){if(wi.GetX()!==newX){wi.SetX(
 			const n0 = p._GetNode(0);
 			return () => n0.ExpInstVar_Family();
 		},
+		() => "|    Fase 03   |\n|  Nome  | seg |\n",
 		() => 12,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
